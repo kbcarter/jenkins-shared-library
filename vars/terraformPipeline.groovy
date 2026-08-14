@@ -7,10 +7,6 @@ def call(Map config = [:]) {
     error("terraformPipeline: 'application' is required!")
   }
 
-  if(!environments.contains('dev')) {
-    error("terraformPipeline: 'dev' environment must be included!")
-  }
-
   pipeline {
     agent any
 
@@ -34,13 +30,21 @@ def call(Map config = [:]) {
       
       stage('Terrform Validate') {
         steps {
-          terraformValidate('dev')
+          script {
+            environments.each { envName ->
+                terraformValidate(envName)
+            }
+          }
         }
       }
 
       stage('Terraform Plan') {
         steps {
-          terraformPlan('dev')
+          script {
+            environments.each { envName ->
+                terraformPlan(envName)
+            }
+          }
         }
       }
 
