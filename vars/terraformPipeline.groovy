@@ -15,7 +15,6 @@ def call(Map config = [:]) {
       disableConcurrentBuilds()
     }
 
-    environments {
       TF_IN_AUTOMATION = 'true'
       TF_INPUT = 'false'
     }
