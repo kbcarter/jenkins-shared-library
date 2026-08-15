@@ -46,6 +46,8 @@ def call(Map config = [:]) {
       stage('Terraform Plan') {
         steps {
           script {
+            echo "Configured environments: ${environments}"
+
             environments.each { envName ->
                 terraformPlan(envName)
             }
