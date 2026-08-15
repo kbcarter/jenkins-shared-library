@@ -29,6 +29,7 @@ def call(Map config = [:]) {
 
       stage('Terraform Format') {
         steps {
+          echo "Branch: ${env.BRANCH_NAME} <---------------"
           sh 'terraform fmt -check -recursive'
         }
       }
