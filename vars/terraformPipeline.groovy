@@ -56,9 +56,6 @@ def call(Map config = [:]) {
       }
 
       stage('Deploy Dev') {
-        when {
-          branch 'main'
-        }
 
         steps {
           terraformApply('dev')
