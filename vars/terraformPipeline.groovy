@@ -15,6 +15,10 @@ def call(Map config = [:]) {
       disableConcurrentBuilds()
     }
 
+    tools {
+      terraform 'terraform-1.15'
+    }
+
     environment {
       TF_IN_AUTOMATION = 'true'
       TF_INPUT = 'false'
