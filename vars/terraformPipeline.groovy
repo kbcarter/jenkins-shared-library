@@ -13,6 +13,7 @@ def call(Map config = [:]) {
     options {
       timestamps()
       disableConcurrentBuilds()
+      ansiColor('xterm')
     }
 
     tools {
