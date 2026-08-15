@@ -29,7 +29,6 @@ def call(Map config = [:]) {
 
       stage('Terraform Format') {
         steps {
-          echo "Branch: ${env.BRANCH_NAME} <---------------"
           sh 'terraform fmt -check -recursive'
         }
       }
@@ -57,6 +56,12 @@ def call(Map config = [:]) {
       }
 
       stage('Deploy Dev') {
+        when {
+          allOf {
+            branch 'main'
+            environments.contains('dev')
+          }
+        }
 
         steps {
           terraformApply('dev')
@@ -74,27 +79,32 @@ def call(Map config = [:]) {
       }
       
       stage('Deploy Test') {
+        when {
+          allOf {
+            branch 'main'
+            environments.contains('test')
+          }
+        }
+
         steps {
           terraformApply('test')
         }
       }
 
-      stage('Production Approval') {
+      stage('Deploy Prod') {
+        when {
+          allOf {
+            branch 'main'
+            environments.contains('prod')
+          }
+        }
+
         steps {
           input(
             message: "Deploy ${application} to production?",
             ok: 'Deploy',
-            submitter: 'platform-team'
           )
-        }
-      }
 
-      stage('Deploy Prod') {
-        when {
-          branch 'main'
-        }
-
-        steps {
           terraformApply('prod')
         }
       }
