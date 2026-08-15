@@ -59,7 +59,9 @@ def call(Map config = [:]) {
         when {
           allOf {
             branch 'main'
-            environments.contains('dev')
+            expression {
+              environments.contains('dev')
+            }
           }
         }
 
@@ -82,7 +84,9 @@ def call(Map config = [:]) {
         when {
           allOf {
             branch 'main'
-            environments.contains('test')
+            expression {
+              environments.contains('test')
+            }
           }
         }
 
@@ -95,7 +99,9 @@ def call(Map config = [:]) {
         when {
           allOf {
             branch 'main'
-            environments.contains('prod')
+            expression {
+              environments.contains('prod')
+            }
           }
         }
 
